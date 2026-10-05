@@ -30,10 +30,10 @@ cd Nutrition-Tracker
 npm install
 ```
 
-Create a `.env.local` file with your connection string:
+Copy the example env file and put your connection string in it:
 
-```env
-DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+```bash
+cp .env.example .env.local
 ```
 
 Create the tables, then start the dev server:
