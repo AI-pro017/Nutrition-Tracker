@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nutrition Tracker
 
-## Getting Started
+A small web app for tracking daily nutrition against your own goals.
 
-First, run the development server:
+You decide what to track, like calories, protein or water, and set a target for each one (for example, protein above 120 g or sugar below 30 g). Each day you log your numbers, and the dashboard shows how you're doing over the last week, month, quarter or year.
+
+Live demo: https://tracking-app-indol.vercel.app
+
+## What it does
+
+- Lets you create your own metrics with any unit and edit or remove them later.
+- Lets you set a goal per metric as either "more than" or "less than" a target value.
+- Has a daily input page for logging values by date.
+- Shows a dashboard with a trend chart, your target line, days within target, missed days, your daily average and how far off the target you are.
+- Lists your most recent entries with a quick within/missed status.
+
+## Tech stack
+
+- Next.js 15 (App Router) with React 19 and TypeScript
+- Tailwind CSS 4
+- PostgreSQL on Neon with Drizzle ORM
+
+## Running it locally
+
+You need Node.js 18 or newer and a Postgres database. A free Neon database works fine.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/AI-pro017/Nutrition-Tracker.git
+cd Nutrition-Tracker
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env.local` file with your connection string:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create the tables, then start the dev server:
 
-## Learn More
+```bash
+npx drizzle-kit push
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+The app runs at http://localhost:3000. Start on the Metrics page, add a goal, and then log a few days of data to fill the dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/
+    api/            API routes for metrics, goals and daily entries
+    daily-input/    Page for logging daily values
+    goals/          Page for setting targets
+    metrics/        Page for managing metrics
+    page.tsx        Dashboard
+  components/       Navigation and small UI components
+  lib/db/           Drizzle schema and database client
+drizzle/            SQL migrations
+```

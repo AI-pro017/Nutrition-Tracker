@@ -1,10 +1,13 @@
+import { loadEnvConfig } from '@next/env';
 import { defineConfig } from 'drizzle-kit';
+
+loadEnvConfig(process.cwd());
 
 export default defineConfig({
   schema: './src/lib/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: 'postgresql://neondb_owner:npg_cSv5poqU7DlJ@ep-winter-pine-aecc6dub-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+    url: process.env.DATABASE_URL!,
   },
 });
